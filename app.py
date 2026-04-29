@@ -1,5 +1,4 @@
 import streamlit as st
-import numpy as np
 import json
 import requests
 from pathlib import Path
@@ -42,15 +41,15 @@ def download_file(url, dest):
             f.write(chunk)
 
 if not CLASSES_PATH.exists():
-    with st.spinner("⬇️ Klassen werden geladen..."):
+    with st.spinner("Klassen werden geladen..."):
         download_file(CLASSES_URL, CLASSES_PATH)
 
 if not MODEL_PATH.exists():
-    with st.spinner("⬇️ KI-Modell wird heruntergeladen (einmalig ~14 MB)..."):
+    with st.spinner("KI-Modell wird heruntergeladen..."):
         download_file(MODEL_URL, MODEL_PATH)
 
 # ── Model ─────────────────────────────────────────────────────────────────────
-@st.cache_resource(show_spinner="🌿 Modell wird geladen...")
+@st.cache_resource(show_spinner="Modell wird geladen...")
 def load_model():
     with open(CLASSES_PATH) as f:
         idx_to_class = json.load(f)
@@ -91,15 +90,15 @@ LABEL_DE = {
 }
 
 DISEASE_INFO = {
-    "Bakterienbrand":        "Bakterieninfektion – dunkle Flecken auf Blättern und Früchten. Breitet sich bei Feuchtigkeit schnell aus.",
-    "Frühfäule":             "Pilzkrankheit – konzentrische braune Ringe auf Blättern, ähnlich wie Schießscheiben.",
-    "Kraut- und Knollenfäule":"Gefährlichster Pflanzenpilz – löste die Irische Hungersnot 1845 aus. Zerstört Felder in Tagen.",
-    "Schimmelfleck":         "Pilzbefall – gelbe Flecken oben, grau-brauner Schimmel unten. Gedeiht bei Feuchtigkeit.",
-    "Septoria-Blattfleck":   "Pilzkrankheit – viele kleine Flecken mit hellem Zentrum. Im Frühstadium schwer zu erkennen.",
-    "Spinnmilbenbefall":     "Winzige Milben saugen Pflanzensaft – kaum sichtbar, Blätter werden bronzefarben.",
-    "Zielfleckenkrankheit":  "Pilzkrankheit – braune Flecken mit konzentrischen Ringen.",
-    "Gelbkräuselkrankheit":  "Virusinfektion durch Weißfliegen – Blätter kräuseln sich gelb. Kein Heilmittel.",
-    "Mosaikvirus":           "Virusinfektion – mosaikartige Verfärbungen. Kein Heilmittel, Pflanze muss entfernt werden.",
+    "Bakterienbrand":        "Bakterieninfektion - dunkle Flecken auf Blättern und Früchten. Breitet sich bei Feuchtigkeit schnell aus.",
+    "Frühfäule":             "Pilzkrankheit - konzentrische braune Ringe auf Blättern, ähnlich wie Schießscheiben.",
+    "Kraut- und Knollenfäule":"Gefährlichster Pflanzenpilz - löste die Irische Hungersnot 1845 aus. Zerstört Felder in Tagen.",
+    "Schimmelfleck":         "Pilzbefall - gelbe Flecken oben, grau-brauner Schimmel unten. Gedeiht bei Feuchtigkeit.",
+    "Septoria-Blattfleck":   "Pilzkrankheit - viele kleine Flecken mit hellem Zentrum. Im Frühstadium schwer zu erkennen.",
+    "Spinnmilbenbefall":     "Winzige Milben saugen Pflanzensaft - kaum sichtbar, Blätter werden bronzefarben.",
+    "Zielfleckenkrankheit":  "Pilzkrankheit - braune Flecken mit konzentrischen Ringen.",
+    "Gelbkräuselkrankheit":  "Virusinfektion durch Weißfliegen - Blätter kräuseln sich gelb. Kein Heilmittel.",
+    "Mosaikvirus":           "Virusinfektion - mosaikartige Verfärbungen. Kein Heilmittel, Pflanze muss entfernt werden.",
 }
 
 def translate_label(raw):
@@ -167,7 +166,7 @@ model, idx_to_class = load_model()
 tab1, tab2 = st.tabs(["📋 Beispielbilder", "📤 Eigenes Bild hochladen"])
 
 with tab1:
-    st.markdown("**Schau dir das Bild an – was glaubst du, was ist mit der Pflanze los?**")
+    st.markdown("**Schau dir das Bild an - was glaubst du, was ist mit der Pflanze los?**")
     st.caption("Erst selbst überlegen, dann die KI fragen!")
     image_files = load_local_images()
     if not image_files:
@@ -200,4 +199,4 @@ with tab2:
             show_result(results)
 
 st.divider()
-st.caption("🌍 KI-Tag an Schulen · Eigenes Modell · 16.000 Bilder · 99,5% Genauigkeit · läuft komplett lokal")
+st.caption("🌍 KI-Tag an Schulen · KI als Pflanzendoktor")
